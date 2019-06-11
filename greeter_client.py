@@ -15,7 +15,7 @@
 
 from __future__ import print_function
 import logging
-
+import sys,getopt
 import grpc
 
 import helloworld_pb2
@@ -26,7 +26,16 @@ def run():
     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
     # used in circumstances in which the with statement does not fit the needs
     # of the code.
-    with grpc.insecure_channel('localhost:50051') as channel:
+    host = 'localhost'
+    port = '50051'
+    opts, args = getopt.getopt(sys.argv[1:],"h:p:",["host=","port="])
+    for opt, arg in opts:
+        if opt in ("-h", "--host"):
+            host = arg
+        elif opt in ("-p", "--port"):
+            port = arg
+    
+    with grpc.insecure_channel(host+':'+port) as channel:
         stub = helloworld_pb2_grpc.GreeterStub(channel)
         response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
     print("Greeter client received: " + response.message)
