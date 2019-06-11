@@ -18,6 +18,8 @@ from concurrent import futures
 import time
 import logging
 
+#import sys,getopt
+
 import grpc
 
 import helloworld_pb2
@@ -33,9 +35,15 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
 
 
 def serve():
+    port = '50051'
+#    opts, args = getopt.getopt(sys.argv[1:],"p:",["port="])
+#    for opt, arg in opts:
+#        if opt in ("-p", "--port"):
+#            port = arg
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
-    server.add_insecure_port('[::]:50051')
+#    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:'+port)
     server.start()
     try:
         while True:
