@@ -18,6 +18,8 @@ import logging
 
 import grpc
 
+import sys,getopt
+
 import helloworld_pb2
 import helloworld_pb2_grpc
 
@@ -28,8 +30,17 @@ def run():
     # of the code.
     #
     # For more channel options, please see https://grpc.io/grpc/core/group__grpc__arg__keys.html
+    host = 'localhost'
+    port = '50051'
+    opts, args = getopt.getopt(sys.argv[1:],"h:p:",["host=","port="])
+    for opt, arg in opts:
+        if opt in ("-h", "--host"):
+            host = arg
+        elif opt in ("-p", "--port"):
+            port = arg
+
     with grpc.insecure_channel(
-            target='localhost:50051',
+            target=host+':'+port,
             options=[('grpc.lb_policy_name', 'pick_first'),
                      ('grpc.enable_retries', 0), ('grpc.keepalive_timeout_ms',
                                                   10000)]) as channel:
