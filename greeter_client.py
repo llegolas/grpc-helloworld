@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright 2015 gRPC authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +14,6 @@
 # limitations under the License.
 """The Python implementation of the GRPC helloworld.Greeter client."""
 
-from __future__ import print_function
 import logging
 import sys,getopt
 import grpc
