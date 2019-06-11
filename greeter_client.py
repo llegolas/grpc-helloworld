@@ -37,7 +37,7 @@ def run():
     
     with grpc.insecure_channel(host+':'+port) as channel:
         stub = helloworld_pb2_grpc.GreeterStub(channel)
-        response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
+        response = stub.SayHello(helloworld_pb2.HelloRequest(name='Larry'))
     print("Greeter client received: " + response.message)
 
 
